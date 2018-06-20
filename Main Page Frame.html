@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+
+* {
+  box-sizing: border-box;
+}
+.menu {
+  float:left;
+  width:20%;
+  text-align:center;
+  
+}
+.menu a {
+  background-color:#4169e1;
+  padding:10px;
+  margin-top:7px;
+  display:block;
+  width:100%;
+  color:white;
+}
+.main {
+  float:left;
+  width:60%;
+  padding:15px 10px 600px 10px;
+  color: red;
+  font-size: 22px;
+  font-style: italic;
+}
+.right {
+  background-color:#4169e1;
+  float:left;
+  width:20%;
+  padding:15px;
+  margin-top:7px;
+  text-align:center;
+  color:white;
+}
+
+@media only screen and (max-width:620px) {
+  /* For mobile phones: */
+  .menu, .main, .right {
+    width:100%;
+  }
+}
+.bgimg {
+    background-image: url('Logo.jpg');
+}
+</style>
+</head>
+<body style="font-family:Verdana;color:#aaaaaa;">
+
+<div style="background-color:#00F;padding:15px;text-align:center;">
+  <h1>Certified Technologies</h1>
+  <h2>Dynamic Choke Web App</h2>
+</div>
+
+<div style="overflow:auto">
+  <div class="menu">
+    <a href="system_input_parameters.html">System Input Parameters</a>
+	<a href="Sensor_Readings.html">Monitored Variables</a>
+	<a href="Realtime_Trends.html">Realtime  Trends</a>
+	
+    
+  </div>
+
+  <div class="main bgimg">
+    <p>A platform for the intelligent and automated choke control for Managed Pressure Drilling.</p>
+  </div>
+
+  <div class="right">
+    <h2>Our Mission</h2>
+    <p>When Quality and Integrity Counts Most.</p>
+  </div>
+</div>
+
+<div style="background-color:#00F;text-align:center;padding:10px;margin-top:7px;">© copyright certifiedtechnologies.com</div>
+
+</body>
+</html>
