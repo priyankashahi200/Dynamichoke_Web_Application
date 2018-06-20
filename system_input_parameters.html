@@ -1,0 +1,183 @@
+<!-- AWP_In_Variable Name='"Global".D_casing' -->
+<!-- AWP_In_Variable Name='"Global".D_tubing' -->
+<!-- AWP_In_Variable Name='"Global".visc' -->
+<!-- AWP_In_Variable Name='"Global".yield_point' -->
+<!-- AWP_In_Variable Name='"Global".visc_index' -->
+<!-- AWP_In_Variable Name='"Global".rho_a' -->
+<!-- AWP_In_Variable Name='"Global".rho_d' -->
+<!-- AWP_In_Variable Name='"Global".h_bit' -->
+<!-- AWP_In_Variable Name='"Global".h_length' -->
+<!--AWP_In_Variable Name='"Global".Kick_status'-->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<!-- This is a code written to develop a web application for CPT's Dynamic Choke Control project, This application is developed using HTML, CSS,Jquery, Javascript and it's Framework and libraries-->
+<!-- Author: Priyanka Shahi-->
+<!-- Version1-->
+<!DOCTYPE html>
+<head>
+<link href = "images/icon.gif" rel="icon" type="image/gif">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="height=device-height, initial-scale=1">
+<title> System Input Parameters </title>
+<!--Third party libraries used (All the external libraries and framework)-->
+
+<!--[if lte IE 8]><script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.2/excanvas.min.js"></script><![endif]-->
+<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.2/jquery.flot.min.js"></script>
+<script src="jquery-3.3.1.js"> </script>
+<script type="text/javascript"></script>
+
+<script src="js/jquery-2.0.2.min.js"></script>
+<script src="js/raphael.2.1.0.min.js"></script>
+<script src="js/justgage.1.0.1.min.js"></script>
+<!--to only make some variable refresh-->
+<script type="text/javascript">
+            $(document).ready(function(){
+            $.ajaxSetup({ cache: false });
+            setInterval(function() {
+            $.get("IO.html", function(result){
+                $('#p_bit0_dummy').text(result.trim());
+            });
+        },1000);
+        });
+    </script>
+<script type="text/javascript">
+            $(document).ready(function(){
+            $.ajaxSetup({ cache: false });
+            setInterval(function() {
+            $.get("In.html", function(result){
+                $('#Kick_status').text(result.trim());
+            });
+        },1000);
+        });
+  </script>
+<!--The stylesheets related to the external as well as CSS library-->
+<link> 
+<link rel="stylesheet" type="text/css" href="bootstrap-3.1.1/css/bootstrap.min.css">  
+</link>
+<!--HTML styling element-->
+<style>
+.table_left{
+    width:55%;
+    margin-right:2%;
+    float: left;
+}
+.content_right{
+width:42%;
+    float: left;
+}
+.blue-text {
+    color: blue;
+  }
+  body  {
+    background-color: blue;
+}
+H2 {
+ font-family: Arial;
+ font-weight: bold;
+ font-size: 15.0pt;
+ color: #0000FF;
+ margin-top:0px;
+ margin-bottom:10px;
+}
+P {
+ font-family: Arial;
+ font-weight: bold;
+ color: #FFFFFF;
+ font-size: 14.0pt;
+ margin-top:0px;
+ margin-bottom:0px;
+}
+TD.Text {
+ font-family: Arial;
+ font-weight: bold;
+ color: #FFFFFF;
+ font-size: 14.0pt;
+ margin-top:0px;
+ margin-bottom:0px;
+}
+
+#placeholder {
+    width: 450px;
+    height: 190px;
+	
+}
+#placeholder1 {
+    width: 450px;
+    height: 190px;
+	}
+#placeholder2{
+width:450px;
+height:190px;
+}
+</style>
+
+
+<!--Script for the server connection
+include the server url-->
+</head>
+<!--Script for the server connection
+include the server url-->
+</head>
+<body>
+<h1  style="color:yellow;" > Certified Technologies </h1>
+<div class= "table_left">
+<img src="Logo.jpg" alt="Logo of CPT." height="120" width="250">
+<h1  style="color:yellow;" > System Input Parameters</h1>
+<table>
+<tr style="vertical-align: top; height: 2%;"><!--to display the tuning and casing diameter-->
+<td style="width:50%;"><p>Casing Diameter:   :="Global".D_casing:</p></td>
+<td ><form method="POST" action=""> <input name='"Global".D_casing' size="10" type="Real"/> <button type="submit">Update</button></form></td>
+<td><p>Inch</p></td></tr> 
+<tr style="vertical-align: top; height: 2%;">
+<td style="width: 50%;"><p>Tubing Diameter:   :="Global".D_tubing:</p></td>
+<td> <form method="POST" action=""><input name='"Global".D_tubing' size="10" type="Real"/> <button type="submit">Update</button></form></td>
+<td><p>Inch</p></td>
+</tr>
+<tr style="vertical-align: top; height: 2%;" > <!--to display the length and depth of the well-->
+<td style="width: 50%;"><p>Depth of Well:   :="Global".h_bit:</p></td>
+<td><form method="POST" action=""> <input name='"Global".h_bit' size="10" type="Real"/> <button type="submit">Update</button></form></td>
+<td><p>Meter</p></td></tr>
+
+<tr style="vertical-align: top; height: 2%;">
+<td style="width: 50%;"><p>Length of Well:   :="Global".length:</p></td>
+<td> <form method="POST" action=""><input name='"Global".length' size="10" type="Real"/> <button type="submit">Update</button></form></td>
+<td><p>Meter</p></td>
+</tr>
+
+<tr style="vertical-align: top; height: 2%;"><!--to display the annular and drill string density-->
+<td style="width: 50%;"><p>Annular Density:   :="Global".rho_a:</p></td>
+<td><form method="POST" action=""> <input name='"Global".rho_a' size="10" type="Real"/> <button type="submit">Update</button></form></td>
+<td><p>Kg/m3</p></td></tr>
+
+<tr style="vertical-align: top; height: 2%;">
+<td style="width: 50%;"><p>Drillstring Density:   :="Global".rho_d:</p></td>
+<td> <form method="POST" action=""><input name='"Global".rho_d' size="10" type="Real"/> <button type="submit">Update</button></form></td>
+<td><p>Kg/m3</p></td>
+</tr>
+
+<tr style="vertical-align: top; height: 2%;"><!--to input the setpoint pressure-->
+<td style="width: 50%;"><p>Pressure Setpoint:   :="Global".pressure_setpoint:</p></td>
+<td><form method="POST" action=""> <input name='"Global".Pressure_setpoint' size="10" type="Real"/> <button type="submit">Update</button></form></td>
+<td><p>Bar</p></td>
+</tr>
+
+<tr style="vertical-align: top; height: 2%;"><!--to input the viscosity Profile-->
+<td style="width: 50%;"><p>Viscosity:   :="Global".visc:</p></td>
+<td><form method="POST" action=""> <input name='"Global".visc' size="10" type="Real"/> <button type="submit">Update</button></form></td>
+<td><p>CP</p></td>
+</tr>
+
+<tr style="vertical-align: top; height: 2%;"><!--to input the viscosity Profile-->
+<td style="width: 50%;"><p>Viscosity Index:   :="Global".visc_index:</p></td>
+<td><form method="POST" action=""> <input name='"Global".visc_index' size="10" type="Real"/> <button type="submit">Update</button></form></td>
+<td><p>CP</p></td>
+</tr>
+<tr style="vertical-align: top; height: 2%;"><!--to input the viscosity Profile-->
+<td style="width: 50%;"><p>Yield Point:   :="Global".yield_point:</p></td>
+<td><form method="POST" action=""> <input name='"Global".yield_point' size="10" type="Real"/> <button type="submit">Update</button></form></td>
+</tr>
+</table> 
+</div>
+</body><!--enclosing parameters-->
+</html>
