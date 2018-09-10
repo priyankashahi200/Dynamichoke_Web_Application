@@ -1,193 +1,236 @@
-<!-- AWP_In_Variable Name='"Global".D_casing' -->
-<!-- AWP_In_Variable Name='"Global".D_tubing' -->
-<!-- AWP_In_Variable Name='"Global".visc' -->
-<!-- AWP_In_Variable Name='"Global".yield_point' -->
-<!-- AWP_In_Variable Name='"Global".visc_index' -->
-<!-- AWP_In_Variable Name='"Global".rho_a' -->
-<!-- AWP_In_Variable Name='"Global".rho_d' -->
-<!-- AWP_In_Variable Name='"Global".h_bit' -->
-<!-- AWP_In_Variable Name='"Global".h_length' -->
-<!--AWP_In_Variable Name='"Global".Kick_status'-->
+
+<!-- AWP_In_Variable Name='"Global".p_bit0_dummy'--> <!--change-->
+<!-- AWP_In_Variable Name='"Global".p_choke0_dummy'-->
+<!-- AWP_In_Variable Name='"Global".q_choke0_dummy'-->
+
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <!-- This is a code written to develop a web application for CPT's Dynamic Choke Control project, This application is developed using HTML, CSS,Jquery, Javascript and it's Framework and libraries-->
 <!-- Author: Priyanka Shahi-->
 <!-- Version1-->
 <!DOCTYPE html>
 <head>
-<link href = "images/icon.gif" rel="icon" type="image/gif">
+<!--link href = "images/icon.gif" rel="icon" type="image/gif"-->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="viewport" content="height=device-height, initial-scale=1">
-<meta http-equiv="refresh" content="1" >
 <title> Dynamic Choke Control Web HMI</title>
 <!--Third party libraries used (All the external libraries and framework)-->
 
 <!--[if lte IE 8]><script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.2/excanvas.min.js"></script><![endif]-->
-<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-<script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.2/jquery.flot.min.js"></script>
-<script src="jquery-3.3.1.js"> </script>
-<script type="text/javascript"></script>
+<!--script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script-->
+<!--script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.2/jquery.flot.min.js"></script-->
+<!--script src="jquery-3.3.1.js"> </script-->
+<!--script type="text/javascript"></script-->
 
-<script src="js/jquery-2.0.2.min.js"></script>
-<script src="js/raphael.2.1.0.min.js"></script>
-<script src="js/justgage.1.0.1.min.js"></script>
+<!--script src="js/jquery-2.0.2.min.js"></script-->
+<script type="text/javascript" src="jquery_3.2.1.min.js"></script>
+<!--script src="js/raphael.2.1.0.min.js"></script-->
+<!--script src="js/justgage.1.0.1.min.js"></script-->
+<script type="text/javascript" src="smoothie.js"></script>   
 <!--to only make some variable refresh-->
 <script type="text/javascript">
-            $(document).ready(function(){
-            $.ajaxSetup({ cache: false });
-            setInterval(function() {
-            $.get("IO.html", function(result){
-                $('#p_bit0_dummy').text(result.trim());
-            });
-        },1000);
-        });
-    </script>
-<script type="text/javascript">
-            $(document).ready(function(){
-            $.ajaxSetup({ cache: false });
-            setInterval(function() {
-            $.get("In.html", function(result){
-                $('#Kick_status').text(result.trim());
-            });
-        },1000);
-        });
-  </script>
-<!--this is for the gauge application-->
-<script type="text/javascript">
-       $(document).ready(function(){
-        var g1;
-        var g1 = new JustGage({
-          id: "g1",
-          value: '#p_bit0_dummy',
-          min: -100,
-          max: 1000,
-          title: "Triangle Wave",
-          label: "Value"
-        });
+   var series1;
+   var series2;
+   var series3;   
+   var timestamp = Date.now();   
+   var sample_value = 0;
+   $(document).ready(function(){
+   
+      series1 = new TimeSeries();
+      series2 = new TimeSeries();
+      series3 = new TimeSeries();
+      
+      // Find the canvas
+      var canvas1 = document.getElementById('chart1');
+      var canvas2 = document.getElementById('chart2');
+      var canvas3 = document.getElementById('chart3');
+      // Create the chart
+      var chart1 = new SmoothieChart({timestampFormatter:SmoothieChart.timeFormatter},{
+     
+         grid: { 
+            strokeStyle:'rgb(125,0,0)', fillStyle:'#00000', lineWidth: 1, millisPerLine: 1000, verticalSections: 6, 
+         },
+         labels: { 
+            fillStyle:'rgb(255, 255, 255)'
+         }
+        
+      });
+	  
+
+	 
+      var chart2 = new SmoothieChart({timestampFormatter:SmoothieChart.timeFormatter},{
+      
+         grid: { 
+            strokeStyle:'rgb(125, 0, 0)', fillStyle:'#00000', lineWidth: 1, millisPerLine: 1000, verticalSections: 6, 
+         },
+         labels: { 
+            fillStyle:'rgb(255, 255, 255)' 
+         }
+        
+      });
+
+      var chart3 = new SmoothieChart({timestampFormatter:SmoothieChart.timeFormatter},{
+    
+         grid: { 
+            strokeStyle:'rgb(125, 0, 0)', fillStyle:'#00000', lineWidth: 1, millisPerLine: 1000, verticalSections: 6, 
+         },
+         labels: { 
+            fillStyle:'rgb(255, 255, 255)' 
+         }
          
-        $.ajaxSetup({ cache: false });
-            setInterval(function() {
-                g2.refresh(getRandomInt(50, 100));
-                $.get("IO.html", function(result){
-                    g1.refresh(parse(result));
-                });
-            },1500);
-    });
-</script>
+      });
+      
+      //chart.options.labels.showIntermediateLabels = true;
+      //chart.options.labels
+      chart1.options.millisPerPixel = 100;      
+      chart1.addTimeSeries(series1, { strokeStyle: 'rgba(0, 255, 0, 1)', fillStyle:'rgba(255,255,255, 0.2)', lineWidth: 3 });
+      chart1.streamTo(canvas1, 100);   
+      
+      chart2.options.millisPerPixel = 100;            
+      chart2.addTimeSeries(series2, { strokeStyle: 'rgba(0, 255, 0, 1)', fillStyle:'rgba(255, 255, 255, 0.2)', lineWidth: 3 });
+      chart2.streamTo(canvas2, 100);   
 
-<script type="text/javascript">
-$(document).ready(function()
+      chart3.options.millisPerPixel = 100;            
+      chart3.addTimeSeries(series3, { strokeStyle: 'rgba(0, 255, 0, 1)', fillStyle:'rgba(255, 255, 255, 0.2)', lineWidth: 3 });
+      chart3.streamTo(canvas3, 100);   
+      
+      function doPoll(){<!--change here-->
+         $.getJSON("plc_data.json", function(result){            
+            timestamp = Date.now();
+            var bh_pressure = result.bh_pressure;
+            var choke_pressure = result.choke_pressure;
+            var choke_flow = result.choke_flow;
+            series1.append(timestamp, bh_pressure);
+            series2.append(timestamp, choke_pressure);
+            series3.append(timestamp, choke_flow);
+         })
+         .fail(function(jqXHR, textStatus, errorThrown) { 
+            console.log('getJSON request failed! ' + textStatus); 
+         });
+      }
+      
+      doPoll();
+      var timer = setInterval(doPoll, 1000);
+      var timer = setTimeout(function run() {
+         doPoll();
+         setTimeout(run, 1000);
+      }, 1000);      
+      
+      function redraw() {
+          chart1 = document.getElementById("chart1");
+          chart2 = document.getElementById("chart2");
+          chart3 = document.getElementById("chart3");          
+          
+          cc1 = chart1.getContext("2d");
+          chart1.width = chart1.clientWidth;
+          chart1.height = chart1.clientHeight;
+          //cc.scale(chart.width, chart.height);
+          cc1.scale(1, 1);             
 
-{
-$.ajaxSetup({ cache: false });
-setInterval(function()
-{
-$.getJSON("IO.html", function(data)
-{
-$('#switch').text(data.switch);
-$('#flow').text(data.flow);
-$('#kick').text(data.kick);
-$('#bottom').text(data.button);
+          cc2 = chart2.getContext("2d");
+          chart2.width = chart2.clientWidth;
+          chart2.height = chart2.clientHeight;
+          //cc.scale(chart.width, chart.height);
+          cc2.scale(1, 1);             
 
-}
-);
-},
-1000
-);
-});
+          cc3 = chart3.getContext("2d");
+          chart3.width = chart3.clientWidth;
+          chart3.height = chart3.clientHeight;
+          //cc.scale(chart.width, chart.height);
+          cc3.scale(1, 1);             
+          
+          // Draw a circle filling the canvas.
+          //cc.beginPath();
+          //cc.arc(0.5, 0.5, .5, 0, 2*Math.PI);
+          //cc.fill();
+      }
+      // update on any window size change.
+      window.addEventListener("resize", redraw);
+      redraw();        
+   });
 
-</script>
-<!--remove this-->
-<!--script for the dummy plot-->
-<script type="text/javascript">
-var d1 = ((1, 300), (2, 600), (3, 550), (4, 40), (5, 1000));
-
-$(document).ready(function () {
-    $.plot($("#placeholder"), (d1));
-});
 </script>
 
 
  
 <!--The stylesheets related to the external as well as CSS library-->
-<link> 
-<link rel="stylesheet" type="text/css" href="bootstrap-3.1.1/css/bootstrap.min.css">  
-</link>
+<!--link rel="stylesheet" type="text/css" href="bootstrap-3.1.1/css/bootstrap.min.css">  </link-->
 <!--HTML styling element-->
 <style>
 .table_left{
-    width:55%;
-    margin-right:2%;
-    float: left;
+   width:55%;
+   margin-right:2%;
+   float: left;
 }
 .content_right{
-width:42%;
-    float: left;
+   width:42%;
+   float: left;
 }
 .blue-text {
-    color: blue;
-  }
-  body  {
-    background-color: blue;
+   color: blue;
+}
+body  {
+   background-color: blue;
 }
 H2 {
- font-family: Arial;
- font-weight: bold;
- font-size: 15.0pt;
- color: #0000FF;
- margin-top:0px;
- margin-bottom:10px;
+   font-family: Arial;
+   font-weight: bold;
+   font-size: 15.0pt;
+   color: #0000FF;
+   margin-top:0px;
+   margin-bottom:10px;
 }
 P {
- font-family: Arial;
- font-weight: bold;
- color: #FFFFFF;
- font-size: 14.0pt;
- margin-top:0px;
- margin-bottom:0px;
+   font-family: Arial;
+   font-weight: bold;
+   color: #FFFFFF;
+   font-size: 14.0pt;
+   margin-top:0px;
+   margin-bottom:0px;
 }
 TD.Text {
- font-family: Arial;
- font-weight: bold;
- color: #FFFFFF;
- font-size: 14.0pt;
- margin-top:0px;
- margin-bottom:0px;
+   font-family: Arial;
+   font-weight: bold;
+   color: #FFFFFF;
+   font-size: 14.0pt;
+   margin-top:0px;
+   margin-bottom:0px;
 }
 
 #placeholder {
-    width: 450px;
-    height: 190px;
-	
+   width: 600px;
+   height: 190px;	
 }
 #placeholder1 {
-    width: 450px;
-    height: 190px;
-	}
+   width: 600px;
+   height: 190px;
+}
 #placeholder2{
-width:450px;
-height:190px;
+   width:600px;
+   height:190px;
 }
 </style>
 
-
-<!--Script for the server connection
-include the server url-->
+<!--Script for the server connection include the server url-->
 </head>
 <body>
-<h1  style="color:yellow;" > Certified Technologies </h1>
-<div class= "table_left">
-<img src="Logo.jpg" alt="Logo of CPT." height="120" width="250">
-<h1  style="color:yellow;" > Realtime Trends</h1>
-<div >
-<div id="g1"></div>
-<p> Buttomhole Pressure</p>
-<div id="placeholder" > </div>
-<p> Choke Pressure</p>
-<div id="placeholder1" > </div>
-<p> Choke Flowrate </p>
-<div id="placeholder2"> </div>	  
-</div>
-
+   <h1  style="color:yellow;" > Certified Technologies </h1>
+   <div class= "table_left">
+      <img src="Logo.jpg" alt="Logo of CPT." height="120" width="250">
+      <h1 style="color:yellow;" > Realtime Trends</h1>
+      <div id="g1"></div>
+      <p> Buttomhole Pressure</p>      
+      <div id="placeholder" >
+	 <canvas id="chart1" width="593" height="187" style="width: 800px; height: 180px;"></canvas>	    
+      </div>
+      <p> Choke Pressure</p>
+      <div id="placeholder1" >
+<canvas id="chart2" width="593" height="187" style="width: 800px; height: 180px;"></canvas>		 
+      </div>
+      <p> Choke Flowrate </p>
+      <div id="placeholder2">
+<canvas id="chart3" width="593" height="187" style="width: 800px; height: 180px;"></canvas>          
+      </div>	  
+   </div>
 </body><!--enclosing parameters-->
 </html>

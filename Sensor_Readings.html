@@ -6,8 +6,10 @@
 <!-- AWP_In_Variable Name='"Global".rho_a' -->
 <!-- AWP_In_Variable Name='"Global".rho_d' -->
 <!-- AWP_In_Variable Name='"Global".h_bit' -->
-<!-- AWP_In_Variable Name='"Global".h_length' -->
+<!-- AWP_In_Variable Name='"Global".length' -->
 <!--AWP_In_Variable Name='"Global".Kick_status'-->
+<!--AWP_In_Variable Name='"Global".flow_type' -->
+<!--AWP_In_Variable Name='"Global".control_signal_switch' -->
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <!-- This is a code written to develop a web application for CPT's Dynamic Choke Control project, This application is developed using HTML, CSS,Jquery, Javascript and it's Framework and libraries-->
 <!-- Author: Priyanka Shahi-->
@@ -17,103 +19,31 @@
 <link href = "images/icon.gif" rel="icon" type="image/gif">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="viewport" content="height=device-height, initial-scale=1">
 <meta http-equiv="refresh" content="1" >
 <title> Dynamic Choke Control Web HMI</title>
+
 <!--Third party libraries used (All the external libraries and framework)-->
-
-<!--[if lte IE 8]><script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.2/excanvas.min.js"></script><![endif]-->
-<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-<script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.2/jquery.flot.min.js"></script>
 <script src="jquery-3.3.1.js"> </script>
-<script type="text/javascript"></script>
 
-<script src="js/jquery-2.0.2.min.js"></script>
-<script src="js/raphael.2.1.0.min.js"></script>
-<script src="js/justgage.1.0.1.min.js"></script>
-<!--to only make some variable refresh-->
 <script type="text/javascript">
-            $(document).ready(function(){
-            $.ajaxSetup({ cache: false });
-            setInterval(function() {
-            $.get("IO.html", function(result){
-                $('#p_bit0_dummy').text(result.trim());
-            });
-        },1000);
-        });
-    </script>
-<script type="text/javascript">
-            $(document).ready(function(){
-            $.ajaxSetup({ cache: false });
-            setInterval(function() {
-            $.get("In.html", function(result){
-                $('#Kick_status').text(result.trim());
-            });
-        },1000);
-        });
-  </script>
-<!--this is for the gauge application-->
-<script type="text/javascript">
-       $(document).ready(function(){
-        var g1;
-        var g1 = new JustGage({
-          id: "g1",
-          value: '#p_bit0_dummy',
-          min: -100,
-          max: 1000,
-          title: "Triangle Wave",
-          label: "Value"
-        });
-         
+    $(document).ready(function(){
+        //query the trianglewave variable every second
         $.ajaxSetup({ cache: false });
-            setInterval(function() {
-                g2.refresh(getRandomInt(50, 100));
-                $.get("IO.html", function(result){
-                    g1.refresh(parse(result));
+        setInterval(function() {
+            $.get("dummy.htm", function(result){
+                $('#flow_type').text(result);
                 });
-            },1500);
-    });
-</script>
+        },1000);
+         
+      
+    </script>
 
-<script type="text/javascript">
-$(document).ready(function()
-
-{
-$.ajaxSetup({ cache: false });
-setInterval(function()
-{
-$.getJSON("IO.html", function(data)
-{
-$('#switch').text(data.switch);
-$('#flow').text(data.flow);
-$('#kick').text(data.kick);
-$('#bottom').text(data.button);
-
-}
-);
-},
-1000
-);
-});
-
-</script>
-<!--remove this-->
-<!--script for the dummy plot-->
-<script type="text/javascript">
-var d1 = ((1, 300), (2, 600), (3, 550), (4, 40), (5, 1000));
-
-$(document).ready(function () {
-    $.plot($("#placeholder"), (d1));
-});
-</script>
-
-
- 
 <!--The stylesheets related to the external as well as CSS library-->
 <link> 
 <link rel="stylesheet" type="text/css" href="bootstrap-3.1.1/css/bootstrap.min.css">  
 </link>
 <!--HTML styling element-->
+
 <style>
 .table_left{
     width:55%;
@@ -157,7 +87,7 @@ TD.Text {
 
 #placeholder {
     width: 450px;
-    height: 190px;
+    height: 190 x;
 	
 }
 #placeholder1 {
@@ -169,8 +99,6 @@ width:450px;
 height:190px;
 }
 </style>
-
-
 <!--Script for the server connection
 include the server url-->
 </head>
@@ -200,7 +128,7 @@ include the server url-->
 </tr>
 <tr style="vertical-align: top; height: 2%;">
 <td style="width: 45%;"><p>Control Method:</p></td><!--Displying control metghod being used -->
-<td style="width: 0%;"><p>:="Global".switch:</p></td>
+<td style="width: 0%;"><p>:="Global".control_signal_switch:</p></td>
 </tr>
 <tr style="vertical-align: top; height: 2%;">
 <td style="width: 45%;"><p>Kick Status:</p></td><!--Displying Kick Status-->
@@ -209,7 +137,7 @@ include the server url-->
 
 <tr style="vertical-align: top; height: 2%;">
 <td style="width: 45%;"><p>Flow Type:</p></td><!--Displying Flow Type-->
-<td style="width: 0%;"><p>:="Global".flow:</p></td>
+<td style="width: 0%;"><p>:="Global".flow_type:</p></td>
 </tr>
 <tr style="vertical-align: top; height: 2%;">
 <td style="width: 45%;"><p>Backpressure Pump:</p></td><!--Displying backpressure pump-->
@@ -223,4 +151,4 @@ include the server url-->
 </table>
 </div>
 </body><!--enclosing parameters-->
-</html>
+</html>

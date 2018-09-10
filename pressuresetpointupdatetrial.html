@@ -9,102 +9,22 @@
 <!-- AWP_In_Variable Name='"Global".rho_d' -->
 <!-- AWP_In_Variable Name='"Global".h_bit' -->
 <!-- AWP_In_Variable Name='"Global".length' -->
-<!--AWP_In_Variable Name='"Global".Kick_status' -->
-<!--AWP_In_Variable Name='"Global".pressure_setpoint' -->
 
-<!-- This is a code written to develop a web application for CPT's Dynamic Choke Control project, This application is developed using HTML, CSS,Jquery, Javascript and it's Framework and libraries-->
-<!-- Author: Priyanka Shahi-->
-<!-- Version1-->
 
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
-<!DOCTYPE html>
+<html lang="en">
 <head>
-<link href = "images/icon.gif" rel="icon" type="image/gif">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title> System Input parameters</title>
-
-<!--Third party libraries used (All the external libraries and framework)-->
-<script type="text/javascript" src="jquery_3.2.1.min.js"></script>
-<!--script to navigate a page back to home page-->
-
-<!--The stylesheets related to the external as well as CSS library-->
-<link> 
-<link rel="stylesheet" type="text/css" href="bootstrap-3.1.1/css/bootstrap.min.css">  
-</link>
-<!--HTML styling element-->
-<style>
-.table_left{
-    width:55%;
-    margin-right:2%;
-    float: left;
-}
-.content_right{
-width:42%;
-    float: left;
-}
-.blue-text {
-    color: blue;
-  }
-  body  {
-    background-color: blue;
-}
-H2 {
- font-family: Arial;
- font-weight: bold;
- font-size: 15.0pt;
- color: #0000FF;
- margin-top:0px;
- margin-bottom:10px;
-}
-P {
- font-family: Arial;
- font-weight: bold;
- color: #FFFFFF;
- font-size: 14.0pt;
- margin-top:0px;
- margin-bottom:0px;
-}
-TD.Text {
- font-family: Arial;
- font-weight: bold;
- color: #FFFFFF;
- font-size: 14.0pt;
- margin-top:0px;
- margin-bottom:0px;
-}
-
-#placeholder {
-    width: 450px;
-    height: 190px;
-	
-}
-#placeholder1 {
-    width: 450px;
-    height: 190px;
-	}
-#placeholder2{
-width:450px;
-height:190px;
-}
-.menu {
-  float:left;
-  
-}
-.menu a {
-  color:white;
-}
-</style>
-</head>
-
-<body>
-<div  style="overflow:auto">
+       <meta charset="utf-8">
+      <title>My Title</title>
+	   <script type="text/javascript" src="jquery_3.2.1.min.js"></script>
+ </head> 
+ <body>
 <div class= "menu"><a href="index.html">Back</a></div>
 <h1  style="color:yellow;" > Certified Technologies </h1>
 <div class= "table_left">
 <img src="Logo.jpg" alt="Logo of CPT." height="120" width="250">
 <h1  style="color:yellow;" > System Input </h1>
 <table>
+
 <h2 style="color:yellow;"> Well Parameters</h2>
 <tr style="vertical-align: top; height: 2%;"><!--to display the tuning and casing diameter-->
 <td style="width:50%;"><p>Casing Diameter:   :="Global".D_casing:</p></td>
@@ -155,8 +75,7 @@ height:190px;
 <tr style="vertical-align: top; height: 2%;"><!--to input the viscosity Profile-->
 <td style="width: 50%;"><p>Yield Point:   :="Global".yield_point:</p></td>
 <td><form method="POST" action=""> <input name='"Global".yield_point' size="10" type="Real"/> <button type="submit">Update</button></form></td>
-<td><p>CP</p></td>
-</tr>
+<td><p>CP</p></td></tr>
 
 <tr><td><h2 style="color:yellow;">Set Point</h2></td></tr>
 
@@ -164,15 +83,16 @@ height:190px;
 <td style="width:50%;"><p>Set Point: :="Global".pressure_setpoint:  </p></td>
 <td ><form method="post"><input name='"Global".pressure_setpoint' type="text" /><button type="submit">Update</button> </form></td>
 <td><p>PSI</p></td></tr>
-
 </table> 
 <div class="container">
 <h1 style="color: yellow"><span>Restart the PLC</span></h1>
 <button id="restart"> PLC Restart</button>
 <div>
 </div>
-</body><!--enclosing parameters-->
-<script type="text/javascript">
+
+</body>
+ 
+ <script type="text/javascript">
     $(document).ready(function(){
         //query the trianglewave variable every second
         $.ajaxSetup({ cache: false });
@@ -184,4 +104,6 @@ height:190px;
          
       
     </script>
+
+
 </html>
